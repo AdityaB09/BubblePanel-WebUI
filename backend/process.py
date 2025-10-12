@@ -23,10 +23,7 @@ def build_args(req: RunRequest) -> List[str]:
 
     if req.page_summarize:
         args += ["--page-summarize"]
-        if req.page_style == "paragraph":
-            args += ["--paragraph"]
-        else:
-            args += ["--novel"]
+        args += ["--paragraph" if req.page_style == "paragraph" else "--novel"]
 
     if req.engine == "llm":
         if req.ollama_text:
@@ -54,7 +51,7 @@ def build_args(req: RunRequest) -> List[str]:
 def collect_paths(out_dir: str, patterns: tuple[str, ...]) -> list[str]:
     found: list[str] = []
     for pat in patterns:
-        found.extend(sorted(glob.glob(os.path.join(out_dir, pat))))
+      found.extend(sorted(glob.glob(os.path.join(out_dir, pat))))
     return found
 
 
@@ -65,12 +62,23 @@ def run_pipeline(req: RunRequest) -> RunResult:
     # Ensure output directory exists
     os.makedirs(req.out, exist_ok=True)
 
+    # ---- Force UTF-8 for the child process (fixes cp1252 UnicodeEncodeError on Windows) ----
+    run_env = os.environ.copy()
+    run_env.setdefault("PYTHONIOENCODING", "utf-8")
+    # also helps in some environments:
+    run_env.setdefault("LC_ALL", "C.UTF-8")
+    run_env.setdefault("LANG", "C.UTF-8")
+    # ----------------------------------------------------------------------------------------
+
     proc = subprocess.run(
         args,
         cwd=REPO_ROOT,
         capture_output=True,
         text=True,
+        encoding="utf-8",      # decode stdout/stderr as UTF-8
+        errors="replace",      # never crash on odd bytes; replace with �
         shell=False,
+        env=run_env,
     )
 
     overlays = collect_paths(req.out, EXT_OVERLAYS)

@@ -1,12 +1,13 @@
 import os
 import shutil
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from settings import RunRequest
 from process import run_pipeline
 
-app = FastAPI(title="BubblePanel API", version="1.1")
+app = FastAPI(title="BubblePanel API", version="1.2")
 
 app.add_middleware(
     CORSMiddleware,
@@ -66,3 +67,13 @@ def presets():
 def run(req: RunRequest):
     result = run_pipeline(req)
     return result.model_dump()
+
+# ---------- NEW: serve output files (overlays, transcripts, jsonl) ----------
+@app.get("/file")
+def get_file(path: str):
+    # Minimal safety: only serve files that exist on disk
+    if not os.path.isfile(path):
+        raise HTTPException(status_code=404, detail="File not found")
+    # Let browser infer type from filename; FileResponse sets headers
+    return FileResponse(path)
+# ---------------------------------------------------------------------------
