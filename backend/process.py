@@ -4,7 +4,7 @@ import subprocess
 import glob
 from typing import List
 
-from settings import RunRequest, RunResult
+from backend.settings import RunRequest, RunResult
 
 # You can override these via environment variables:
 #   BP_PYTHON, BP_SCRIPT, BP_REPO_ROOT

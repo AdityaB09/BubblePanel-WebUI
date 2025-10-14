@@ -5,8 +5,8 @@ from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
-from settings import RunRequest
-from process import run_pipeline
+from backend.settings import RunRequest          # ← change
+from backend.process import run_pipeline
 
 app = FastAPI(title="BubblePanel API", version="1.3")
 
