@@ -1,0 +1,15 @@
+{
+  "image": "page_0004.png",
+  "ocr": [
+    {
+      "box": [
+        361,
+        115,
+        626,
+        354
+      ],
+      "text": ": MASTERS IN 7 FOREIGN LAND.",
+      "conf": 0.713
+    }
+  ]
+}

@@ -1,17 +1,18 @@
 import os
+import re
 import shutil
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
 from settings import RunRequest
 from process import run_pipeline
 
-app = FastAPI(title="BubblePanel API", version="1.2")
+app = FastAPI(title="BubblePanel API", version="1.3")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # lock down for production
+    allow_origins=["*"],  # tighten for prod
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,7 +27,6 @@ def status():
     repo = os.environ.get("BP_REPO_ROOT", os.getcwd())
     script = os.environ.get("BP_SCRIPT", "smoke_test.py")
     pyexe = os.environ.get("BP_PYTHON", "python")
-
     return {
         "ok": True,
         "python": pyexe,
@@ -65,15 +65,38 @@ def presets():
 
 @app.post("/run")
 def run(req: RunRequest):
+    # minimal guard so users can’t click Run before choosing a file
+    if not (req.input and os.path.isabs(req.input)):
+        raise HTTPException(status_code=400, detail="Input image path is empty. Upload an image first or provide an absolute path.")
     result = run_pipeline(req)
     return result.model_dump()
 
-# ---------- NEW: serve output files (overlays, transcripts, jsonl) ----------
+# ---------- serve output files (images / txt / jsonl) ----------
 @app.get("/file")
 def get_file(path: str):
-    # Minimal safety: only serve files that exist on disk
     if not os.path.isfile(path):
         raise HTTPException(status_code=404, detail="File not found")
-    # Let browser infer type from filename; FileResponse sets headers
     return FileResponse(path)
-# ---------------------------------------------------------------------------
+
+# ---------- upload endpoint so the UI can choose a file ----------
+_SAFE_RE = re.compile(r"[^A-Za-z0-9._-]+")
+
+def _safe_name(name: str) -> str:
+    base = _SAFE_RE.sub("_", name)
+    return base or "upload"
+
+@app.post("/upload")
+async def upload(file: UploadFile = File(...)):
+    upload_root = os.environ.get("BP_UPLOAD_DIR", os.path.join(os.getcwd(), "uploads"))
+    os.makedirs(upload_root, exist_ok=True)
+
+    safe = _safe_name(file.filename or "upload")
+    dest = os.path.join(upload_root, safe)
+
+    try:
+        with open(dest, "wb") as f:
+            f.write(await file.read())
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save file: {e}")
+
+    return {"ok": True, "path": os.path.abspath(dest), "filename": file.filename}

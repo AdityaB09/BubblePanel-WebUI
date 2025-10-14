@@ -1,0 +1,41 @@
+{
+  "image": "page_0003.png",
+  "panels": [
+    {
+      "box": [
+        32,
+        15,
+        967,
+        385
+      ]
+    }
+  ],
+  "bubbles": [
+    {
+      "box": [
+        32,
+        15,
+        967,
+        385
+      ]
+    }
+  ],
+  "ocr": [
+    {
+      "box": [
+        32,
+        15,
+        967,
+        385
+      ],
+      "text": "WHERE HAVE YOU BEEN UP TO THESe YEARS?",
+      "backend": "rapidocr"
+    }
+  ],
+  "transcript": [
+    "[Panel 1]",
+    "- WHERE HAVE YOU BEEN UP TO THESe YEARS?  (via rapidocr)",
+    ""
+  ],
+  "transcript_txt": "page_0003_text.txt"
+}

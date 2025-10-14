@@ -1,0 +1,174 @@
+{
+  "image": "page_0002.png",
+  "panels": [
+    {
+      "box": [
+        31,
+        8,
+        968,
+        623
+      ]
+    },
+    {
+      "box": [
+        32,
+        658,
+        967,
+        385
+      ]
+    },
+    {
+      "box": [
+        31,
+        1070,
+        968,
+        464
+      ]
+    }
+  ],
+  "bubbles": [
+    {
+      "box": [
+        32,
+        658,
+        967,
+        385
+      ]
+    },
+    {
+      "box": [
+        182,
+        190,
+        720,
+        270
+      ]
+    },
+    {
+      "box": [
+        394,
+        1082,
+        605,
+        201
+      ]
+    },
+    {
+      "box": [
+        78,
+        47,
+        341,
+        124
+      ]
+    },
+    {
+      "box": [
+        31,
+        1424,
+        337,
+        110
+      ]
+    },
+    {
+      "box": [
+        687,
+        40,
+        276,
+        127
+      ]
+    },
+    {
+      "box": [
+        122,
+        1286,
+        94,
+        89
+      ]
+    }
+  ],
+  "ocr": [
+    {
+      "box": [
+        32,
+        658,
+        967,
+        385
+      ],
+      "text": "WHERE HAVE YOU BEEN UP TO THESe YEARS?",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        182,
+        190,
+        720,
+        270
+      ],
+      "text": "© yy .; an aN p RS Co A",
+      "backend": "tesseract"
+    },
+    {
+      "box": [
+        394,
+        1082,
+        605,
+        201
+      ],
+      "text": "1 WAS DOING MASTERS IN FOREIGN LAND.",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        78,
+        47,
+        341,
+        124
+      ],
+      "text": "How Are you?",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        31,
+        1424,
+        337,
+        110
+      ],
+      "text": "",
+      "backend": "none"
+    },
+    {
+      "box": [
+        687,
+        40,
+        276,
+        127
+      ],
+      "text": "I AM fine.",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        122,
+        1286,
+        94,
+        89
+      ],
+      "text": "DN",
+      "backend": "tesseract"
+    }
+  ],
+  "transcript": [
+    "[Panel 1]",
+    "- I AM fine.  (via rapidocr)",
+    "- How Are you?  (via rapidocr)",
+    "- © yy .; an aN p RS Co A  (via tesseract)",
+    "",
+    "[Panel 2]",
+    "- WHERE HAVE YOU BEEN UP TO THESe YEARS?  (via rapidocr)",
+    "",
+    "[Panel 3]",
+    "- 1 WAS DOING MASTERS IN FOREIGN LAND.  (via rapidocr)",
+    "- DN  (via tesseract)",
+    ""
+  ],
+  "transcript_txt": "page_0002_text.txt"
+}

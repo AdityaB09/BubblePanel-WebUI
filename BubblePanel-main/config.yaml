@@ -1,0 +1,88 @@
+# =========================
+# Global configuration
+# =========================
+
+# If you installed Tesseract on Windows and it's not on PATH, set this:
+tesseract_cmd: "C:/Program Files/Tesseract-OCR/tesseract.exe"   # adjust or remove if not needed
+
+# -------------------------
+# OCR (multi-backend)
+# -------------------------
+ocr:
+  # Order for per-bubble OCR (first non-empty text wins)
+  backends: ["rapidocr", "paddleocr", "tesseract", "easyocr"]
+  lang: "en"
+  tesseract_langs: ["eng"]
+  tesseract_cmd: "C:/Program Files/Tesseract-OCR/tesseract.exe"  # mirrors top-level for convenience
+
+  # Full-page ALL-OCR (diagnostics) merge behavior
+  merge_iou: 0.5
+  prefer_longer_text: true
+  conf_weighted_avg: true
+  min_conf: 0.0
+
+# Enable EasyOCR usage inside reconciliation (optional; requires torch)
+use_easyocr: false
+
+# -------------------------
+# Panel detection
+# -------------------------
+panel_canny1: 50
+panel_canny2: 150
+panel_dilate_iter: 2
+panel_min_area: 5000             # pixels
+panel_min_rectangularity: 0.60   # contour area / bounding-rect area
+
+# -------------------------
+# Bubble detection (per panel)
+# -------------------------
+# Pre-threshold & morphology (if used by your detector)
+adaptive_block_size: 35
+adaptive_C: 5
+morph_open_kernel: 3
+morph_close_kernel: 5
+
+# Candidate filters
+bubble_min_area: 300
+bubble_max_area: 300000
+bubble_min_solidity: 0.55
+bubble_max_aspect: 4.0
+
+# Text-driven grouping + grow
+text_group_merge_px: 58        # base dilation to merge close word boxes
+bubble_expand_px: 18           # padding around grouped text
+text_min_components: 3         # min MSER/word components inside a candidate
+min_white_ratio: 0.35          # fraction of white pixels required inside candidate
+white_percentile: 83           # pixels brighter than this percentile are "white"
+var_window: 9                  # local variance window (odd)
+var_percentile: 35             # keep areas with variance below this percentile
+grow_iters: 24                 # iterations for region grow (if used)
+
+# MSER (text finder) – if your detector uses it
+mser_delta: 5
+mser_min_area: 60
+mser_max_area: 8000
+
+# -------------------------
+# Reconciliation (page OCR ↔ bubbles)
+# -------------------------
+reconcile:
+  enable: true
+  coverage_thresh: 0.70        # desired fraction of words covered by bubbles within a panel
+  max_passes: 2                # how many relaxed re-tries before fallback
+
+  # How much to relax the detector when coverage is low
+  rerun_merge_px_add: 40       # +pixels to text_group_merge_px
+  rerun_white_delta: -10       # shift white_percentile (negative = more permissive)
+  rerun_min_white_ratio: 0.25  # relax white coverage constraint
+
+  # After retries, if coverage still low, build bubbles from OCR words directly
+  fallback_from_words: true
+
+# -------------------------
+# Drawing / debug
+# -------------------------
+panel_color:  [0, 102, 255]   # BGR
+bubble_color: [0, 200, 0]     # BGR
+box_thickness: 2
+font_scale: 0.5

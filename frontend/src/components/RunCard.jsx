@@ -1,7 +1,35 @@
+import { useRef, useState } from 'react';
 import Field from './Field';
+import { uploadFile } from '../api';
 
 export default function RunCard({ form, setForm, onRun, onPreset, isRunning }) {
   const update = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
+
+  const fileRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadedName, setUploadedName] = useState('');
+
+  const pickFile = () => fileRef.current?.click();
+
+  const onFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const res = await uploadFile(file);
+      if (res?.ok && res?.path) {
+        update('input', res.path);   // <-- use server path as --input
+        setUploadedName(res.filename);
+      }
+    } catch {
+      alert('Upload failed');
+    } finally {
+      setUploading(false);
+      e.target.value = ''; // allow re-selecting same file
+    }
+  };
+
+  const canRun = !!form.input && !uploading && !isRunning;
 
   return (
     <div className="card vstack">
@@ -17,13 +45,35 @@ export default function RunCard({ form, setForm, onRun, onPreset, isRunning }) {
       </div>
 
       <div className="row">
-        <Field label="Input image path">
-          <input value={form.input} onChange={e=>update('input', e.target.value)}
-                 placeholder=".\\data\\chapter\\smoke_chapter\\page_0007.png"/>
+        <Field label="Input image">
+          <div className="hstack" style={{ gap: 8, alignItems: 'center' }}>
+            <input
+              value={form.input || ''}
+              onChange={e => update('input', e.target.value)}
+              placeholder="(Choose image or paste absolute path)"
+              style={{ flex: 1 }}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileRef}
+              onChange={onFileChange}
+              style={{ display: 'none' }}
+            />
+            <button className="ghost" onClick={pickFile} disabled={uploading}>
+              {uploading ? 'Uploading…' : 'Choose image'}
+            </button>
+          </div>
+          {uploadedName && <div className="small">Uploaded: {uploadedName}</div>}
+          {!form.input && <div className="small" style={{ color: '#f7b' }}>No input selected yet.</div>}
         </Field>
+
         <Field label="Output folder">
-          <input value={form.out} onChange={e=>update('out', e.target.value)}
-                 placeholder=".\\data\\outputs\\page_0007_web"/>
+          <input
+            value={form.out}
+            onChange={e => update('out', e.target.value)}
+            placeholder="C:\\path\\to\\outputs\\run1"
+          />
         </Field>
       </div>
 
@@ -100,7 +150,9 @@ export default function RunCard({ form, setForm, onRun, onPreset, isRunning }) {
           <button className="ghost" onClick={()=>onPreset('encoder_paragraph_mpnet')}>Encoder • Paragraph</button>
           <button className="ghost" onClick={()=>onPreset('llm_paragraph_llama')}>Llama • Paragraph</button>
         </div>
-        <button onClick={onRun} disabled={isRunning}>{isRunning ? 'Running…' : 'Run'}</button>
+        <button onClick={onRun} disabled={!canRun}>
+          {uploading ? 'Uploading…' : isRunning ? 'Running…' : 'Run'}
+        </button>
       </div>
     </div>
   );

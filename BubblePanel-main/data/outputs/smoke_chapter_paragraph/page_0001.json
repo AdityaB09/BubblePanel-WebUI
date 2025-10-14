@@ -1,0 +1,41 @@
+{
+  "image": "page_0001.png",
+  "panels": [
+    {
+      "box": [
+        31,
+        8,
+        968,
+        623
+      ]
+    }
+  ],
+  "bubbles": [
+    {
+      "box": [
+        31,
+        8,
+        968,
+        623
+      ]
+    }
+  ],
+  "ocr": [
+    {
+      "box": [
+        31,
+        8,
+        968,
+        623
+      ],
+      "text": "How Are you? I Am fine.",
+      "backend": "rapidocr"
+    }
+  ],
+  "transcript": [
+    "[Panel 1]",
+    "- How Are you? I Am fine.  (via rapidocr)",
+    ""
+  ],
+  "transcript_txt": "page_0001_text.txt"
+}

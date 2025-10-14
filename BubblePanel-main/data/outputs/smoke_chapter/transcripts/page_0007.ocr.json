@@ -1,0 +1,75 @@
+{
+  "page": "page_0007",
+  "panels": [
+    {
+      "box": [
+        10,
+        21,
+        586,
+        387
+      ],
+      "bubbles": [
+        {
+          "box": [
+            448,
+            106,
+            126,
+            212
+          ],
+          "ocr": {
+            "rapidocr": "Though, that's Ihaven't odd... put in my name yet...",
+            "paddleocr": "Though, that's I haven't odd... put in my name yet...",
+            "tesseract": "Though, that's odd... | haven't put in my name yet..."
+          }
+        }
+      ],
+      "panel_fallback_ocr": {
+        "rapidocr": "Venu Status Clan:N/A Though, Name: Hiragi Suzune that's Record: O Battles Ihaven't odd... Points:3 put in And... my name eventhe yet... avatar that's set here... somehow looks like me...",
+        "paddleocr": "Vent Status do] Clan:N/A Though, Name: Hiiragi Suzune that's Record:0 Battles I haven't odd... put in And... Points:3 myname even the yet... avatar that's set here... somehow looks like me...",
+        "tesseract": "| haven't put in my name yet..."
+      }
+    },
+    {
+      "box": [
+        11,
+        451,
+        287,
+        31
+      ],
+      "bubbles": [],
+      "panel_fallback_ocr": {
+        "rapidocr": "",
+        "paddleocr": "",
+        "tesseract": ""
+      }
+    },
+    {
+      "box": [
+        311,
+        451,
+        295,
+        482
+      ],
+      "bubbles": [
+        {
+          "box": [
+            433,
+            683,
+            154,
+            222
+          ],
+          "ocr": {
+            "rapidocr": "Evenifit Auto- cangrab matically my name capturing from my an avatar phone's with my contacts camera... list, Could that have really happened?",
+            "paddleocr": "Even if it can grab Auto- matically my name capturing from my an avatar phone's with my contacts camera... list, Could that have really happened?",
+            "tesseract": "matically capturing an avatar with my camera. Could that have really happened? Even if it can grab my name from my phone's contacts list,"
+          }
+        }
+      ],
+      "panel_fallback_ocr": {
+        "rapidocr": "Even if it Auto- cangrab matically my name capturing from my an avatar phone's with my contacts camera... list, Could that have really happened?",
+        "paddleocr": "Even if it can grab Auto- matically my name capturing from my an avatar phone's with my contacts camera... list, Could that have really happened?",
+        "tesseract": "matically capturing an avatar with my camera. Could that have really happened? Even if it can grab my name from my phone's contacts list,"
+      }
+    }
+  ]
+}

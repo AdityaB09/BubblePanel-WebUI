@@ -1,0 +1,175 @@
+{
+  "image": "page_0007.png",
+  "page_id": "page_0007",
+  "panels": [
+    {
+      "box": [
+        10,
+        21,
+        596,
+        408
+      ]
+    },
+    {
+      "box": [
+        11,
+        451,
+        298,
+        482
+      ]
+    },
+    {
+      "box": [
+        311,
+        451,
+        295,
+        482
+      ]
+    }
+  ],
+  "bubbles": [
+    {
+      "box": [
+        10,
+        21,
+        596,
+        408
+      ]
+    },
+    {
+      "box": [
+        11,
+        451,
+        298,
+        482
+      ]
+    },
+    {
+      "box": [
+        311,
+        537,
+        295,
+        380
+      ]
+    },
+    {
+      "box": [
+        447,
+        106,
+        127,
+        212
+      ]
+    },
+    {
+      "box": [
+        212,
+        622,
+        75,
+        176
+      ]
+    },
+    {
+      "box": [
+        459,
+        485,
+        109,
+        78
+      ]
+    },
+    {
+      "box": [
+        433,
+        885,
+        103,
+        48
+      ]
+    }
+  ],
+  "ocr": [
+    {
+      "box": [
+        10,
+        21,
+        596,
+        408
+      ],
+      "text": "Venu Status Top Clan:N/A Though, Name:Hiragi Suzune that's Record: O Battles Ihaven't odd... Points:3 put in And... my name eventhe yet... avatar 沃 that's set here... somehow lookslike me... uegetabile",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        11,
+        451,
+        298,
+        482
+      ],
+      "text": "It would be great if she could respond... Yeah... Maybe 1 should e-mail Rain-chan tomorrow about this.",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        311,
+        537,
+        295,
+        380
+      ],
+      "text": "Even if it Auto- cangrab matically my name capturing o an avatar phone's with my contacts camera... list, Could that have really happened?",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        447,
+        106,
+        127,
+        212
+      ],
+      "text": "Though, that's Ihaven't odd... put in my name yet...",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        212,
+        622,
+        75,
+        176
+      ],
+      "text": "Yeah... Maybe 1 should e-mail Rain-chan tomoTrow about this.",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        459,
+        485,
+        109,
+        78
+      ],
+      "text": "",
+      "backend": "none"
+    },
+    {
+      "box": [
+        433,
+        885,
+        103,
+        48
+      ],
+      "text": "el",
+      "backend": "tesseract"
+    }
+  ],
+  "transcript": [
+    "[Panel 1]",
+    "- Venu Status Top Clan:N/A Though, Name:Hiragi Suzune that's Record: O Battles Ihaven't odd... Points:3 put in And... my name eventhe yet... avatar 沃 that's set here... somehow lookslike me... uegetabile  (via rapidocr)",
+    "- Though, that's Ihaven't odd... put in my name yet...  (via rapidocr)",
+    "",
+    "[Panel 2]",
+    "- It would be great if she could respond... Yeah... Maybe 1 should e-mail Rain-chan tomorrow about this.  (via rapidocr)",
+    "- Yeah... Maybe 1 should e-mail Rain-chan tomoTrow about this.  (via rapidocr)",
+    "",
+    "[Panel 3]",
+    "- Even if it Auto- cangrab matically my name capturing o an avatar phone's with my contacts camera... list, Could that have really happened?  (via rapidocr)",
+    "- el  (via tesseract)",
+    ""
+  ],
+  "transcript_txt": "page_0007_text.txt"
+}

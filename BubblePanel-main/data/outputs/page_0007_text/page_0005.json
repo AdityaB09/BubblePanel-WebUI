@@ -1,0 +1,280 @@
+{
+  "image": "page_0005.png",
+  "page_id": "page_0005",
+  "panels": [
+    {
+      "box": [
+        15,
+        14,
+        596,
+        272
+      ]
+    },
+    {
+      "box": [
+        15,
+        299,
+        262,
+        325
+      ]
+    },
+    {
+      "box": [
+        278,
+        292,
+        333,
+        633
+      ]
+    },
+    {
+      "box": [
+        0,
+        637,
+        277,
+        288
+      ]
+    }
+  ],
+  "bubbles": [
+    {
+      "box": [
+        278,
+        292,
+        333,
+        633
+      ]
+    },
+    {
+      "box": [
+        0,
+        637,
+        277,
+        288
+      ]
+    },
+    {
+      "box": [
+        58,
+        14,
+        422,
+        174
+      ]
+    },
+    {
+      "box": [
+        15,
+        299,
+        262,
+        210
+      ]
+    },
+    {
+      "box": [
+        15,
+        205,
+        510,
+        81
+      ]
+    },
+    {
+      "box": [
+        286,
+        593,
+        151,
+        244
+      ]
+    },
+    {
+      "box": [
+        23,
+        413,
+        133,
+        203
+      ]
+    },
+    {
+      "box": [
+        121,
+        722,
+        116,
+        187
+      ]
+    },
+    {
+      "box": [
+        96,
+        45,
+        74,
+        142
+      ]
+    },
+    {
+      "box": [
+        207,
+        473,
+        70,
+        108
+      ]
+    },
+    {
+      "box": [
+        199,
+        552,
+        78,
+        72
+      ]
+    },
+    {
+      "box": [
+        62,
+        350,
+        54,
+        64
+      ]
+    }
+  ],
+  "ocr": [
+    {
+      "box": [
+        278,
+        292,
+        333,
+        633
+      ],
+      "text": "\"Darwin's Game\"? Plaedts But l'mnot looking fora gmamal mobile Well nemali certainly game though... thefirst letterof Darwinis 'D'as well..",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        0,
+        637,
+        277,
+        288
+      ],
+      "text": "Well, my doctor puy p!p it for me Iguess after all, 人 11.1 SO... it out little...",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        58,
+        14,
+        422,
+        174
+      ],
+      "text": "M doctor recalled something about\"D- Game\"!",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        15,
+        299,
+        262,
+        210
+      ],
+      "text": "I thought it'd be a more illegal gambling game Probably similar to so,but... this...",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        15,
+        205,
+        510,
+        81
+      ],
+      "text": "ee Se re ee cite",
+      "backend": "tesseract"
+    },
+    {
+      "box": [
+        286,
+        593,
+        151,
+        244
+      ],
+      "text": "But l'mnot looking fora mobile Well certainly game though... thefirst letterof Darwinis D'as well...",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        23,
+        413,
+        133,
+        203
+      ],
+      "text": "Probably so, but...",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        121,
+        722,
+        116,
+        187
+      ],
+      "text": "Well, my doctor did find it for me guess after all, 人 11.1 SO... itout little...",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        96,
+        45,
+        74,
+        142
+      ],
+      "text": "",
+      "backend": "none"
+    },
+    {
+      "box": [
+        207,
+        473,
+        70,
+        108
+      ],
+      "text": "4",
+      "backend": "tesseract"
+    },
+    {
+      "box": [
+        199,
+        552,
+        78,
+        72
+      ],
+      "text": "iA",
+      "backend": "tesseract"
+    },
+    {
+      "box": [
+        62,
+        350,
+        54,
+        64
+      ],
+      "text": "a |",
+      "backend": "tesseract"
+    }
+  ],
+  "transcript": [
+    "[Panel 1]",
+    "- M doctor recalled something about\"D- Game\"!  (via rapidocr)",
+    "- ee Se re ee cite  (via tesseract)",
+    "",
+    "[Panel 2]",
+    "- \"Darwin's Game\"? Plaedts But l'mnot looking fora gmamal mobile Well nemali certainly game though... thefirst letterof Darwinis 'D'as well..  (via rapidocr)",
+    "- But l'mnot looking fora mobile Well certainly game though... thefirst letterof Darwinis D'as well...  (via rapidocr)",
+    "",
+    "[Panel 3]",
+    "- I thought it'd be a more illegal gambling game Probably similar to so,but... this...  (via rapidocr)",
+    "- a |  (via tesseract)",
+    "- Probably so, but...  (via rapidocr)",
+    "- 4  (via tesseract)",
+    "- iA  (via tesseract)",
+    "",
+    "[Panel 4]",
+    "- Well, my doctor puy p!p it for me Iguess after all, 人 11.1 SO... it out little...  (via rapidocr)",
+    "- Well, my doctor did find it for me guess after all, 人 11.1 SO... itout little...  (via rapidocr)",
+    ""
+  ],
+  "transcript_txt": "page_0005_text.txt"
+}

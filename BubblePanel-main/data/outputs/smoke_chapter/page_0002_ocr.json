@@ -1,0 +1,25 @@
+{
+  "image": "page_0002.png",
+  "ocr": [
+    {
+      "box": [
+        361,
+        1167,
+        626,
+        354
+      ],
+      "text": ": MASTERS IN 7 FOREIGN LAND.",
+      "conf": 0.713
+    },
+    {
+      "box": [
+        59,
+        671,
+        372,
+        215
+      ],
+      "text": "(“were HAVE you BEEN UP TO \\ THESE YEARS? ¢",
+      "conf": 0.767
+    }
+  ]
+}

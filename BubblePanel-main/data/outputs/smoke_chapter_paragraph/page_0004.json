@@ -1,0 +1,41 @@
+{
+  "image": "page_0004.png",
+  "panels": [
+    {
+      "box": [
+        31,
+        18,
+        968,
+        464
+      ]
+    }
+  ],
+  "bubbles": [
+    {
+      "box": [
+        31,
+        18,
+        968,
+        464
+      ]
+    }
+  ],
+  "ocr": [
+    {
+      "box": [
+        31,
+        18,
+        968,
+        464
+      ],
+      "text": "1 WAS dOING MASTERS IN FOREIGN LAND",
+      "backend": "rapidocr"
+    }
+  ],
+  "transcript": [
+    "[Panel 1]",
+    "- 1 WAS dOING MASTERS IN FOREIGN LAND  (via rapidocr)",
+    ""
+  ],
+  "transcript_txt": "page_0004_text.txt"
+}

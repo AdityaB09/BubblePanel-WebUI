@@ -1,0 +1,9 @@
+[Panel 1]
+- 中中中中  (via rapidocr)
+- 安中中中  (via rapidocr)
+- ae  (via tesseract)
+- V us  (via rapidocr)
+- ae  (via tesseract)
+- \  (via tesseract)
+[Panel 2]
+- (no text)

@@ -1,0 +1,15 @@
+{
+  "image": "page_0003.png",
+  "ocr": [
+    {
+      "box": [
+        59,
+        28,
+        372,
+        215
+      ],
+      "text": "(“were HAVE you BEEN UP TO \\ THESE YEARS? ¢",
+      "conf": 0.767
+    }
+  ]
+}

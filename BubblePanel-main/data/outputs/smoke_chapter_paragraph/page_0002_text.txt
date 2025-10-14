@@ -1,0 +1,11 @@
+[Panel 1]
+- I AM fine.  (via rapidocr)
+- How Are you?  (via rapidocr)
+- © yy .; an aN p RS Co A  (via tesseract)
+
+[Panel 2]
+- WHERE HAVE YOU BEEN UP TO THESe YEARS?  (via rapidocr)
+
+[Panel 3]
+- 1 WAS DOING MASTERS IN FOREIGN LAND.  (via rapidocr)
+- DN  (via tesseract)

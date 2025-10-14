@@ -1,0 +1,75 @@
+{
+  "page": "page_0006",
+  "panels": [
+    {
+      "box": [
+        6,
+        8,
+        591,
+        558
+      ],
+      "bubbles": [],
+      "panel_fallback_ocr": {
+        "rapidocr": "Eh...? Ju- just now, itfelt like something a snake or jumped puero bit me... must've beenmy imagina- tion, right...? How- ever, if you decide to join, there'sno Don't guarantee foryour mis- judge life. when to stop digging in.",
+        "paddleocr": "Ju- Eh...? just now, it Felt like a snake or something jumped bit me... That must've been my imagina- tion, right... How- ever, if you decide to join, there's no Don't guarantee mis- for your llie judge when to stop digging in.",
+        "tesseract": "Jue just now, ft felt like a snake or something jumped ‘out and. bit me... That must've been my imagina- tion, How- ever, if you decide to join, there's no guarantee rmis- for your judge when to stop digging in"
+      }
+    },
+    {
+      "box": [
+        6,
+        314,
+        350,
+        260
+      ],
+      "bubbles": [
+        {
+          "box": [
+            265,
+            331,
+            67,
+            155
+          ],
+          "ocr": {
+            "rapidocr": "How- ever,if you decide to join, there'sno guarantee foryour life.",
+            "paddleocr": "How- ever, if you decide to join, there's no guarantee for your life.",
+            "tesseract": "How- ever, if you decide to join, there's no guarantee for your life."
+          }
+        }
+      ],
+      "panel_fallback_ocr": {
+        "rapidocr": "How- ever,if you decide to join, there'sno Don't guarantee for your mis- life. judge when to stop digging in.",
+        "paddleocr": "How- ever if you decide to join, there's no Don't guarantee for your mis- judge life. when to stop digging in.",
+        "tesseract": "rmis- judge When to stop digging in guarantee for your life. _— Le"
+      }
+    },
+    {
+      "box": [
+        7,
+        587,
+        596,
+        334
+      ],
+      "bubbles": [
+        {
+          "box": [
+            73,
+            691,
+            63,
+            153
+          ],
+          "ocr": {
+            "rapidocr": "But, this is just a mobile game, SO...",
+            "paddleocr": "But, this is just a mobile game, so...",
+            "tesseract": ""
+          }
+        }
+      ],
+      "panel_fallback_ocr": {
+        "rapidocr": "Th- there's But, this is eMou right? just a This... mobile game, SO...",
+        "paddleocr": "Th- But, there's this is no way, right? just a This... mobile game, so...",
+        "tesseract": ""
+      }
+    }
+  ]
+}

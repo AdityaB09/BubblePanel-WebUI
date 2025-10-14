@@ -26,6 +26,12 @@ export async function runJob(payload) {
   return r.json();
 }
 
-// ---------- NEW: helper to build a URL for files served by FastAPI ----------
+export async function uploadFile(file) {
+  const form = new FormData();
+  form.append('file', file);
+  const r = await fetch(`${API}/upload`, { method: 'POST', body: form });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json(); // { ok, path, filename }
+}
+
 export const fileUrl = (p) => `${API}/file?path=${encodeURIComponent(p)}`;
-// ---------------------------------------------------------------------------

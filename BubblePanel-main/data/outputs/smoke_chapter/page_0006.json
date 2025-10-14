@@ -1,0 +1,157 @@
+{
+  "image": "page_0006.png",
+  "panels": [
+    {
+      "box": [
+        6,
+        8,
+        597,
+        566
+      ]
+    },
+    {
+      "box": [
+        6,
+        314,
+        350,
+        260
+      ]
+    },
+    {
+      "box": [
+        7,
+        587,
+        596,
+        334
+      ]
+    }
+  ],
+  "bubbles": [
+    {
+      "box": [
+        6,
+        8,
+        597,
+        566
+      ]
+    },
+    {
+      "box": [
+        61,
+        675,
+        542,
+        168
+      ]
+    },
+    {
+      "box": [
+        6,
+        314,
+        350,
+        260
+      ]
+    },
+    {
+      "box": [
+        94,
+        822,
+        423,
+        76
+      ]
+    },
+    {
+      "box": [
+        265,
+        331,
+        67,
+        155
+      ]
+    },
+    {
+      "box": [
+        73,
+        691,
+        63,
+        153
+      ]
+    }
+  ],
+  "ocr": [
+    {
+      "box": [
+        6,
+        8,
+        597,
+        566
+      ],
+      "text": "Eh...? Ju- justnow, it felt like a snake or something jumped pueqro bit me... must've beermy imagina- tion, right... How- ever,if you decide to join, there's no Don't guarantee foryour mis- life. judge when to stop digging in.",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        61,
+        675,
+        542,
+        168
+      ],
+      "text": "Th- But, there's this is no way, right? just a This... mobile game, SO...",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        6,
+        314,
+        350,
+        260
+      ],
+      "text": "How- ever,if you decide to join, there'sno Don't guarantee for your mis- life. judge when to stop digging in.",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        94,
+        822,
+        423,
+        76
+      ],
+      "text": "",
+      "backend": "none"
+    },
+    {
+      "box": [
+        265,
+        331,
+        67,
+        155
+      ],
+      "text": "How- ever,if you decide to join, there's no guarantee for your life.",
+      "backend": "rapidocr"
+    },
+    {
+      "box": [
+        73,
+        691,
+        63,
+        153
+      ],
+      "text": "But, thisis just a mobile game, SO...",
+      "backend": "rapidocr"
+    }
+  ],
+  "transcript": [
+    "[Panel 1]",
+    "- Eh...? Ju- justnow, it felt like a snake or something jumped pueqro bit me... must've beermy imagina- tion, right... How- ever,if you decide to join, there's no Don't guarantee foryour mis- life. judge when to stop digging in.  (via rapidocr)",
+    "- How- ever,if you decide to join, there'sno Don't guarantee for your mis- life. judge when to stop digging in.  (via rapidocr)",
+    "- How- ever,if you decide to join, there's no guarantee for your life.  (via rapidocr)",
+    "",
+    "[Panel 2]",
+    "- How- ever,if you decide to join, there'sno Don't guarantee for your mis- life. judge when to stop digging in.  (via rapidocr)",
+    "- How- ever,if you decide to join, there's no guarantee for your life.  (via rapidocr)",
+    "",
+    "[Panel 3]",
+    "- Th- But, there's this is no way, right? just a This... mobile game, SO...  (via rapidocr)",
+    "- But, thisis just a mobile game, SO...  (via rapidocr)",
+    ""
+  ],
+  "transcript_txt": "page_0006_text.txt"
+}

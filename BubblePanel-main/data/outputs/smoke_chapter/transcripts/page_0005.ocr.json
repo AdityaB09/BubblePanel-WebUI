@@ -1,0 +1,89 @@
+{
+  "page": "page_0005",
+  "panels": [
+    {
+      "box": [
+        15,
+        14,
+        581,
+        258
+      ],
+      "bubbles": [
+        {
+          "box": [
+            97,
+            45,
+            73,
+            142
+          ],
+          "ocr": {
+            "rapidocr": "",
+            "paddleocr": "",
+            "tesseract": ""
+          }
+        }
+      ],
+      "panel_fallback_ocr": {
+        "rapidocr": "doctor recalled something about\"D- Game\"!",
+        "paddleocr": "My doctor recalled something Game\"!",
+        "tesseract": "aS _"
+      }
+    },
+    {
+      "box": [
+        15,
+        299,
+        247,
+        26
+      ],
+      "bubbles": [],
+      "panel_fallback_ocr": {
+        "rapidocr": "",
+        "paddleocr": "",
+        "tesseract": ""
+      }
+    },
+    {
+      "box": [
+        278,
+        292,
+        55,
+        341
+      ],
+      "bubbles": [],
+      "panel_fallback_ocr": {
+        "rapidocr": "",
+        "paddleocr": "",
+        "tesseract": ""
+      }
+    },
+    {
+      "box": [
+        0,
+        637,
+        277,
+        288
+      ],
+      "bubbles": [
+        {
+          "box": [
+            121,
+            725,
+            116,
+            184
+          ],
+          "ocr": {
+            "rapidocr": "Well, my doctor did find it for me guess after all, Au1l.1 SO... it out little...",
+            "paddleocr": "Well, my doctor puy p!p it for me I guess after all, An 1L1 $o... it out little...",
+            "tesseract": "Well, my doctor did find it for me I guess afterall, filty 8 it out little..."
+          }
+        }
+      ],
+      "panel_fallback_ocr": {
+        "rapidocr": "Well, my doctor puy p!p it for me Iguess after all, 人 11.1 SO... it out little...",
+        "paddleocr": "Well, my doctor did find it for me I guess after all, Au 11.1 $o... it out little...",
+        "tesseract": "doctor did find it for me afterall, | guess vil try it out"
+      }
+    }
+  ]
+}
