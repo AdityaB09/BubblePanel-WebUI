@@ -1,23 +1,22 @@
 from pydantic import BaseModel
 from typing import Literal, Optional, List
 
-
 class RunRequest(BaseModel):
-    # File & paths
+    # IO
     input: str
     out: str
     jsonl: str = "panels.jsonl"
 
-    # LLM host (used only if engine=='llm' and ollama_text set)
-    host: Optional[str] = None  # e.g., "https://your-ollama-host:11434"
+    # LLM host (only used if engine=="llm")
+    host: Optional[str] = None
 
     # Summary mode
     page_summarize: bool = True
     page_style: Literal["paragraph", "novel"] = "paragraph"
 
     # Engines
-    engine: Literal["llm", "encoder"] = "encoder"  # safe default = NO Ollama
-    ollama_text: Optional[str] = None              # e.g., "qwen2.5:7b-instruct"
+    engine: Literal["llm", "encoder"] = "encoder"   # safe default = NO Ollama
+    ollama_text: Optional[str] = None               # e.g. "qwen2.5:7b-instruct"
 
     # Encoder options
     embed_model: str = "sentence-transformers/all-mpnet-base-v2"
@@ -30,7 +29,7 @@ class RunRequest(BaseModel):
     ocr_verbose: bool = False
     no_ocr: bool = False
 
-    # Utilities
+    # Utility
     dry_run: bool = False
 
 

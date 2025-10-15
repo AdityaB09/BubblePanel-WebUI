@@ -1,11 +1,9 @@
 import os, shlex, subprocess, glob
 from pathlib import Path
 from typing import List
-
 from backend.models import RunRequest, RunResult
-from backend.settings import BP_ROOT, PY_EXE, SCRIPT, norm
+from backend.settings import BP_ROOT
 
-# Artifacts we list back to the UI
 EXT_OVERLAYS = ("*_panels.png", "*_bubbles.png")
 EXT_TEXTS    = ("*_text.txt",)
 EXT_JSONLS   = ("*.jsonl",)
@@ -17,14 +15,13 @@ def _collect(out_dir: str, patterns: tuple[str, ...]) -> list[str]:
     return found
 
 def _build_args(req: RunRequest) -> List[str]:
-    args = [PY_EXE, SCRIPT, "--input", req.input, "--out", req.out, "--jsonl", req.jsonl]
+    args = ["python", "smoke_test.py", "--input", req.input, "--out", req.out, "--jsonl", req.jsonl]
 
     if req.page_summarize:
         args += ["--page-summarize"]
         args += ["--paragraph" if req.page_style == "paragraph" else "--novel"]
 
     if req.engine == "llm":
-        # Only add Ollama flags if a model AND a host are provided
         if req.ollama_text and req.host:
             args += ["--ollama-text", req.ollama_text, "--host", req.host]
     else:
@@ -41,13 +38,11 @@ def _build_args(req: RunRequest) -> List[str]:
     return args
 
 def run_pipeline(req: RunRequest) -> RunResult:
-    # Create out dir
     os.makedirs(req.out, exist_ok=True)
 
     args = _build_args(req)
     cmd_str = " ".join(shlex.quote(a) for a in args)
 
-    # Force UTF-8 in child
     run_env = os.environ.copy()
     run_env.setdefault("PYTHONIOENCODING", "utf-8")
     run_env.setdefault("LC_ALL", "C.UTF-8")
@@ -55,26 +50,15 @@ def run_pipeline(req: RunRequest) -> RunResult:
 
     if req.dry_run:
         return RunResult(
-            ok=True,
-            command=cmd_str,
-            stdout="(dry_run) would execute in {}".format(BP_ROOT),
-            stderr="",
-            out_dir=req.out,
-            overlays=[],
-            text_files=[],
-            jsonls=[]
+            ok=True, command=cmd_str, stdout=f"(dry_run) cwd={BP_ROOT}", stderr="",
+            out_dir=req.out, overlays=[], text_files=[], jsonls=[]
         )
 
     proc = subprocess.run(
         args,
-        cwd=str(BP_ROOT),           # IMPORTANT: run inside BubblePanel-main/
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        shell=False,
-        env=run_env,
-        timeout=120,                # keep requests bounded
+        cwd=str(BP_ROOT),           # run inside BubblePanel-main
+        capture_output=True, text=True, encoding="utf-8", errors="replace",
+        shell=False, env=run_env, timeout=120
     )
 
     overlays   = _collect(req.out, EXT_OVERLAYS)
