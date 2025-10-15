@@ -24,7 +24,6 @@ COPY backend/requirements.txt backend/requirements.txt
 RUN python -m pip install --upgrade pip && \
     pip install -r backend/requirements.txt && \
     # Optional: if BubblePanel-main has its own requirements.txt, uncomment next line:
-    # pip install -r BubblePanel-main/requirements.txt && \
     true
 
 # Runtime env for backend process module
