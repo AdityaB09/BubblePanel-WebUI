@@ -6,22 +6,15 @@ python-multipart==0.0.9
 requests==2.32.3
 typing_extensions==4.12.2
 
-# --- Imaging / utils (safe for Render, satisfies cv2 import in smoke_test.py) ---
+# --- Imaging / CV (prebuilt wheels on py311) ---
 opencv-python-headless==4.10.0.84
 numpy==1.26.4
-Pillow==10.3.0
+Pillow==10.4.0
 imageio==2.35.1
 scikit-image==0.24.0
 tqdm==4.66.5
 PyYAML==6.0.2
 regex==2024.9.11
 
-# --- Optional OCR (only useful if tesseract binary is present; fine to leave installed) ---
+# --- Optional OCR bridge (requires tesseract binary to truly OCR; safe to keep) ---
 pytesseract==0.3.10
-
-# --- Optional: if you plan to run the encoder/embeddings flow on a machine with GPU/CPU headroom ---
-torch==2.2.2
-torchvision==0.17.2
-torchaudio==2.2.2
-sentence-transformers==2.7.0
-transformers==4.44.2
