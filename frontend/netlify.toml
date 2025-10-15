@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to   = "https://bubblepanel-webui.onrender.com/:splat"
+  to   = "https://bubblepanel-webui-1.onrender.com/:splat"
   status = 200
   force  = true
 
