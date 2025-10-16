@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
 from backend.models import RunRequest
-from backend.process import run_pipeline
+from backend.app import run_pipeline
 from backend.settings import (
     PROJECT_ROOT, BP_ROOT, UPLOAD_DIR, map_ui_upload_path, norm
 )

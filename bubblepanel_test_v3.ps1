@@ -1,34 +1,41 @@
-<#
+<# 
 .SYNOPSIS
-  BubblePanel tester (PowerShell, Windows-friendly).
-  - Uploads an image (via curl.exe)
-  - Calls /run in encoder mode (no Ollama)
-  - Optional: dry-run, custom timeout, Netlify proxy
+  BubblePanel backend tester for Windows PowerShell 5.1+
+  - Uploads an image (curl.exe multipart)
+  - Calls /run in encoder mode (JSON)
+  - Optional timeout override
+  - Targets Render directly or the Netlify proxy
 
 .EXAMPLES
-  .\bubblepanel_test_v3.ps1 -LocalImage "C:\path\page.png"
-  .\bubblepanel_test_v3.ps1 -LocalImage "C:\path\page.png" -OutRel "./data/outputs/page_web" -TimeoutSeconds 900
-  .\bubblepanel_test_v3.ps1 -LocalImage "C:\path\page.png" -UseNetlify -NetlifyBase "https://bubblebeta.netlify.app"
+  # Direct to Render
+  .\bubblepanel_test_v3.ps1 -Base "https://bubblepanel-webui-1.onrender.com" -LocalImage "C:\path\page_0002.png"
+
+  # Through Netlify proxy
+  .\bubblepanel_test_v3.ps1 -Base "https://bubblebeta.netlify.app/api" -LocalImage "C:\path\page_0002.png"
+
+  # Longer timeout (first-run model downloads)
+  .\bubblepanel_test_v3.ps1 -LocalImage "C:\path\page_0002.png" -TimeoutSec 900
+
+  # Enable LLM summaries (requires a reachable Ollama host in your backend config)
+  .\bubblepanel_test_v3.ps1 -Summarize
 #>
 
 param(
-  [string]$RenderBase   = "https://bubblepanel-webui-1.onrender.com",
-  [string]$NetlifyBase  = "https://bubblebeta.netlify.app",
-  [switch]$UseNetlify,
-  [string]$LocalImage   = "C:\path\to\image.png",
-  [string]$OutRel       = "./data/outputs/ocr_test",
-  [string]$Jsonl        = "panels.jsonl",
-  [int]$TimeoutSeconds  = 600,
-  [switch]$DryRun
+  [string]$Base       = "https://bubblepanel-webui-1.onrender.com",  # use https://<netlify>/api for proxy
+  [string]$LocalImage = "C:\path\to\image.png",
+  [string]$OutRel     = "./data/outputs/ocr_test",
+  [string]$Jsonl      = "panels.jsonl",
+  [int]$TimeoutSec    = 900,
+  [switch]$DryRun,
+  [switch]$Summarize    # OFF by default to avoid Ollama errors
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-function Show-ErrorBody {
-  param([Parameter(Mandatory)][System.Exception]$Exception)
+function Show-Err($ex) {
   try {
-    $resp = $Exception.Response
+    $resp = $ex.Response
     if ($resp -and $resp.GetResponseStream) {
       $rs = $resp.GetResponseStream()
       $sr = New-Object System.IO.StreamReader($rs)
@@ -36,113 +43,83 @@ function Show-ErrorBody {
       $sr.Close()
       Write-Host "`n--- Error body from server ---`n$body`n-------------------------------" -ForegroundColor Yellow
     }
-  } catch { }
+  } catch {}
 }
 
-function Get-Json {
-  param([Parameter(Mandatory)][hashtable]$Obj)
-  return ($Obj | ConvertTo-Json -Compress -Depth 6)
+function J($obj) { $obj | ConvertTo-Json -Compress -Depth 8 }
+
+function UrlJoin([string]$a,[string]$b) {
+  if ($a.EndsWith('/')) { $a = $a.TrimEnd('/') }
+  if ($b.StartsWith('/')) { $b = $b.TrimStart('/') }
+  return "$a/$b"
 }
 
-function BaseUrl {
-  if ($UseNetlify) { return "$NetlifyBase/api" } else { return $RenderBase }
-}
-
-function Test-Backend {
-  $base = BaseUrl
-  Write-Host "Checking backend status at $($base)/status ..." -ForegroundColor Cyan
-  $st = Invoke-RestMethod "$($base)/status" -Method GET
-  Write-Host ("Backend OK. script_exists={0}" -f $st.script_exists) -ForegroundColor Green
+function Get-Status {
+  param([string]$Base)
+  $url = UrlJoin $Base "status"
+  Write-Host "GET $url" -ForegroundColor Cyan
+  Invoke-RestMethod -Uri $url -Method GET
 }
 
 function Upload-Image {
-  param([Parameter(Mandatory)][string]$Path)
-  if (-not (Test-Path -LiteralPath $Path)) {
-    throw "LocalImage not found: $Path"
-  }
-  $base = BaseUrl
-  Write-Host "Uploading $Path via curl.exe -> $($base)/upload ..." -ForegroundColor Cyan
-  $json = & curl.exe -s -F "file=@$Path" "$($base)/upload"
-  if (-not $json) { throw "Upload failed: empty response." }
-  try {
-    $resp = $json | ConvertFrom-Json
-  } catch {
-    throw "Upload failed: response was not JSON. Raw: $json"
-  }
-  if (-not $resp.ok) { throw "Upload failed." }
-  Write-Host ("Uploaded. ui_path={0}" -f ($resp.ui_path ?? $resp.path)) -ForegroundColor Green
-  return ($resp.ui_path ?? $resp.path)
+  param([string]$Base,[string]$Path)
+  if (-not (Test-Path -LiteralPath $Path)) { throw "LocalImage not found: $Path" }
+  $url = UrlJoin $Base "upload"
+  Write-Host "Uploading via curl.exe -> $url" -ForegroundColor Cyan
+  # Robust quoting for windows paths with spaces:
+  $quoted = '"' + $Path + '"'
+  $raw = & curl.exe -s -F "file=@$quoted" "$url"
+  if (-not $raw) { throw "Upload failed: empty response" }
+  try { $resp = $raw | ConvertFrom-Json } catch { throw "Upload failed: not JSON. Raw: $raw" }
+  if (-not $resp.ok) { throw "Upload failed" }
+  return $resp.ui_path
 }
 
-function Run-OCR {
-  param(
-    [Parameter(Mandatory)][string]$UiPath,
-    [Parameter(Mandatory)][string]$OutRel,
-    [Parameter(Mandatory)][string]$Jsonl,
-    [int]$TimeoutSeconds,
-    [switch]$DryRun
-  )
-  $base = BaseUrl
-  $body = Get-Json @{
-    input          = $UiPath
-    out            = $OutRel
-    jsonl          = $Jsonl
-    engine         = "encoder"     # No Ollama
-    page_summarize = $true
+function Run-Encoder {
+  param([string]$Base,[string]$UiPath,[string]$OutRel,[string]$Jsonl,[int]$TimeoutSec,[switch]$DryRun,[switch]$Summarize)
+  $url = UrlJoin $Base "run"
+  $body = J @{
+    input = $UiPath
+    out   = $OutRel
+    jsonl = $Jsonl
+    engine = "encoder"
+    page_summarize = [bool]$Summarize    # <- OFF by default to avoid Ollama
     page_style     = "paragraph"
-    dry_run        = [bool]$DryRun
-    timeout_seconds= [int]$TimeoutSeconds
+    timeout_seconds = $TimeoutSec
+    dry_run = [bool]$DryRun
   }
-
-  Write-Host "POST $($base)/run (encoder mode) ..." -ForegroundColor Cyan
-  $resp = Invoke-RestMethod -Uri "$($base)/run" -Method POST -ContentType "application/json" -Body $body
-  if (-not $resp.ok) { throw "Server returned ok=false. See stdout/stderr in response." }
-
-  Write-Host "`n--- Command ---`n$($resp.command)`n" -ForegroundColor Magenta
-  if ($resp.stdout) { Write-Host "--- stdout (tail) ---" -ForegroundColor DarkCyan; $resp.stdout | Out-Host }
-  if ($resp.stderr) { Write-Host "`n--- stderr (tail) ---" -ForegroundColor DarkYellow; $resp.stderr | Out-Host }
-
-  $overlayCount = ($resp.overlays | Measure-Object).Count
-  $textCount    = ($resp.text_files | Measure-Object).Count
-  $jsonlCount   = ($resp.jsonls | Measure-Object).Count
-  Write-Host ("`nArtifacts: overlays={0} text_files={1} jsonls={2}" -f $overlayCount, $textCount, $jsonlCount) -ForegroundColor Green
-
-  return $resp
+  Write-Host "POST $url" -ForegroundColor Cyan
+  Invoke-RestMethod -Uri $url -Method POST -ContentType 'application/json' -Body $body
 }
 
 function Download-Artifact {
-  param([Parameter(Mandatory)][string]$ServerPath, [string]$OutFile)
-  $base = BaseUrl
+  param([string]$Base,[string]$ServerPath,[string]$OutFile)
   if (-not $OutFile) { $OutFile = Split-Path -Leaf $ServerPath }
-  $url = "$($base)/file?path=$([uri]::EscapeDataString($ServerPath))"
-  Write-Host "Downloading $ServerPath -> $OutFile" -ForegroundColor Cyan
-  Invoke-WebRequest -Uri $url -OutFile $OutFile
+  $url = UrlJoin $Base ("file?path=" + [uri]::EscapeDataString($ServerPath))
+  Write-Host "GET $url -> $OutFile" -ForegroundColor Cyan
+  Invoke-WebRequest -Uri $url -OutFile $OutFile | Out-Null
 }
 
-# ---------------- Main ----------------
 try {
-  Test-Backend
+  $st = Get-Status -Base $Base
+  Write-Host ("Backend OK. script_exists={0}" -f $st.script_exists) -ForegroundColor Green
 
-  $ui = Upload-Image -Path $LocalImage
+  $ui = Upload-Image -Base $Base -Path $LocalImage
+  Write-Host "ui_path=$ui" -ForegroundColor Green
 
-  $result = Run-OCR -UiPath $ui -OutRel $OutRel -Jsonl $Jsonl -TimeoutSeconds $TimeoutSeconds -DryRun:$DryRun
+  $resp = Run-Encoder -Base $Base -UiPath $ui -OutRel $OutRel -Jsonl $Jsonl -TimeoutSec $TimeoutSec -DryRun:$DryRun -Summarize:$Summarize
+  $resp | ConvertTo-Json -Depth 8 | Out-Host
 
   if (-not $DryRun) {
-    if ($result.overlays -and $result.overlays.Count -gt 0) {
-      Download-Artifact -ServerPath $result.overlays[0]
-    }
-    if ($result.text_files -and $result.text_files.Count -gt 0) {
-      Download-Artifact -ServerPath $result.text_files[0]
-    }
-    if ($result.jsonls -and $result.jsonls.Count -gt 0) {
-      Download-Artifact -ServerPath $result.jsonls[0]
-    }
+    if ($resp.overlays -and $resp.overlays.Count -gt 0) { Download-Artifact -Base $Base -ServerPath $resp.overlays[0] }
+    if ($resp.text_files -and $resp.text_files.Count -gt 0) { Download-Artifact -Base $Base -ServerPath $resp.text_files[0] }
+    if ($resp.jsonls -and $resp.jsonls.Count -gt 0) { Download-Artifact -Base $Base -ServerPath $resp.jsonls[0] }
   } else {
-    Write-Host "`n(Dry run only; no artifacts to download.)" -ForegroundColor Yellow
+    Write-Host "(Dry run) Skipping downloads." -ForegroundColor Yellow
   }
 
   Write-Host "`nDone." -ForegroundColor Green
 } catch {
-  Show-ErrorBody -Exception $_.Exception
+  Show-Err $_.Exception
   throw
 }

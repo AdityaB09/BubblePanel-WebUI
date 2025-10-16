@@ -4,7 +4,7 @@
 
 
 [build.environment]
-  VITE_API = "/api"
+  VITE_API = "https://bubblepanel-webui-1.onrender.com"
 
 [[redirects]]
   from = "/api/*"
