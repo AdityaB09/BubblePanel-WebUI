@@ -31,7 +31,8 @@ ENV BP_PYTHON=python \
     BP_SCRIPT=smoke_test.py \
     BP_REPO_ROOT=/app/BubblePanel-main \
     BP_UPLOAD_DIR=/app/uploads \
-    PYTHONIOENCODING=utf-8
+    PYTHONIOENCODING=utf-8 \
+    BP_TIMEOUT=1200   
 
 # Create uploads dir
 RUN mkdir -p /app/uploads

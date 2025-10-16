@@ -1,24 +1,23 @@
 from pydantic import BaseModel
 from typing import Literal, Optional, List
 
+
 class RunRequest(BaseModel):
     # IO
-    input: str
-    out: str
-    jsonl: str = "panels.jsonl"
+    input: str                     # server-side path or /app/uploads/<file>
+    out: str                       # output dir (relative to BubblePanel-main or absolute)
+    jsonl: str = "panels.jsonl"    # will be placed under 'out' if relative
 
-    # LLM host (only used if engine=="llm")
+    # LLM (only if engine == "llm")
     host: Optional[str] = None
+    ollama_text: Optional[str] = None
 
-    # Summary mode
+    # Summary / layout
     page_summarize: bool = True
     page_style: Literal["paragraph", "novel"] = "paragraph"
 
     # Engines
-    engine: Literal["llm", "encoder"] = "encoder"   # safe default = NO Ollama
-    ollama_text: Optional[str] = None               # e.g. "qwen2.5:7b-instruct"
-
-    # Encoder options
+    engine: Literal["llm", "encoder"] = "encoder"     # safe default: no Ollama
     embed_model: str = "sentence-transformers/all-mpnet-base-v2"
     mlm_refiner: bool = False
 
@@ -29,8 +28,9 @@ class RunRequest(BaseModel):
     ocr_verbose: bool = False
     no_ocr: bool = False
 
-    # Utility
+    # Execution control
     dry_run: bool = False
+    timeout_seconds: Optional[int] = None             # override per-request timeout
 
 
 class RunResult(BaseModel):
