@@ -3,7 +3,7 @@
   publish = "dist"
 
 [build.environment]
-  VITE_API = "https://bubblepanel-webui-1.onrender.com"
+  VITE_API = "/api"
 
 [[redirects]]
   from = "/api/*"
