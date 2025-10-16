@@ -3,10 +3,5 @@
   publish = "dist"
 
 [build.environment]
-  VITE_API = "/api"
-
-[[redirects]]
-  from = "/api/*"
-  to   = "https://bubblepanel-webui-1.onrender.com/:splat"
-  status = 200
-  force  = true
+  # point the app directly at your Render backend
+  VITE_API = "https://bubblepanel-webui-1.onrender.com"

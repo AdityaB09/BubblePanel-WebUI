@@ -1,5 +1,5 @@
 // src/api.js
-// Backend base URL (from Netlify env VITE_API or fallback for local dev)
+// Backend base URL (from Netlify/Vite env)
 export const API =
   (import.meta.env.VITE_API ? import.meta.env.VITE_API.replace(/\/+$/, '') : '') ||
   'http://127.0.0.1:8080';
@@ -14,24 +14,22 @@ function httpError(res, bodyText) {
   const err = new Error(`HTTP ${res.status} ${res.statusText}`);
   err.kind = 'http';
   err.status = res.status;
-  err.statusText = res.statusText;
-  err.url = res.url;
   err.body = bodyText;
   return err;
 }
 
-export async function getHealth() {
-  const r = await fetch(`${API}/health`);
-  const { text } = await readBody(r);
-  if (!r.ok) throw httpError(r, text);
-  return JSON.parse(text || '{}');
-}
-
 export async function getStatus() {
   const r = await fetch(`${API}/status`);
-  const { text } = await readBody(r);
+  const { text, json } = await readBody(r);
   if (!r.ok) throw httpError(r, text);
-  return JSON.parse(text || '{}');
+  return json ?? {};
+}
+
+export async function getHealth() {
+  const r = await fetch(`${API}/health`);
+  const { text, json } = await readBody(r);
+  if (!r.ok) throw httpError(r, text);
+  return json ?? {};
 }
 
 export async function getPresets() {
@@ -41,15 +39,15 @@ export async function getPresets() {
   return json ?? {};
 }
 
-export async function runJob(payload) {
+export async function runJob(body) {
   const r = await fetch(`${API}/run`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(body),
   });
   const { text, json } = await readBody(r);
   if (!r.ok) throw httpError(r, text);
-  if (!json || typeof json !== 'object') {
+  if (!json) {
     const err = new Error('Invalid JSON from server');
     err.kind = 'bad-json';
     err.url = `${API}/run`;
